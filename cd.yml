@@ -39,3 +39,7 @@ steps:
      terraform plan
     displayName: 'terrafrom plan'
 
+  - script: |
+     cd terrafom 
+     terraform apply -auto-approve
+    displayName: 'Terraform Plan'
