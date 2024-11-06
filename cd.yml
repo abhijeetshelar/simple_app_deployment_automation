@@ -13,18 +13,7 @@ variables:
   TF_VAR_tenant_id: $(azCli.tenant_id)
 
 steps:
-  - task: UseAzureCLI@2
-    inputs:
-      azureSubscription: 'YourServiceConnectionName'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        # Navigate to the Terraform directory
-        cd terraform 
-
-        # Initialize Terraform
-        terraform init
-
-        # Run Terraform plan and output to a file
-        terraform plan -out=tfplan
-    displayName: 'Run Terraform Plan'
+ - script: 
+      az login --service-principal -u $(TF_VAR_client_id) -p $(TF_VAR_client_secret) --tenant $(TF_VAR_tenant_id)
+      az account set --subscription $(TF_VAR_subscription_id)
+   displayName: 'Authenticate with Azure CLI'
