@@ -21,9 +21,14 @@ steps:
         echo "Setting up Azure subscription context..."
         echo "Client ID: $TF_VAR_client_id"
         echo "Tenant ID: $TF_VAR_tenant_id"
-        echo "Subscription ID: $TF_VAR_sub_id"
+        echo "Subscription ID: $TF_VAR_sub_id" 
         
         az account set --subscription $TF_VAR_sub_id
         echo "Subscription set successfully."
 
     displayName: 'Azure CLI Task - Authenticate and Set Subscription'
+
+  - script: |
+      cd terraform
+      terraform init
+    displayName: 'Terraform Init'
