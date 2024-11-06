@@ -33,3 +33,8 @@ steps:
       cd terrafom
       terraform init
     displayName: 'Terraform Init'
+  
+  - script: |
+     ls -l
+     terrafrom plan
+    displayName: 'terrafrom plan'
