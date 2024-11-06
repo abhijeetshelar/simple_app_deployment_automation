@@ -42,4 +42,4 @@ steps:
   - script: |
      cd terrafom 
      terraform apply -auto-approve
-    displayName: 'Terraform Plan'
+    displayName: 'Terraform apply'
