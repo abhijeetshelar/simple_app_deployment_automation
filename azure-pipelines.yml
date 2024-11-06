@@ -1,8 +1,6 @@
 # azure-pipelines.yml
 trigger:
-  branches:
-    include:
-      - main  # Trigger pipeline on push to the main branch
+   - none  # Trigger pipeline on push to the main branch
 
 pool:
   name: 'Linux'
