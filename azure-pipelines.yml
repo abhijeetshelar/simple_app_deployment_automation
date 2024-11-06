@@ -5,7 +5,7 @@ trigger:
       - main  # Trigger pipeline on push to the main branch
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Linux'
 
 variables:
   # Name of the HTML linter to be used (optional but recommended)
