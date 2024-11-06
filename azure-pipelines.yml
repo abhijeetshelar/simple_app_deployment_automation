@@ -17,10 +17,7 @@ steps:
   - checkout: self
     persistCredentials: true
     displayName: 'Checkout code from GitHub'
-    inputs:
-      fetchDepth: 1  # Only fetch the latest commit to reduce build time
-      repository: yourusername/yourrepo  # Replace with your GitHub repository path
-      serviceConnection: github  # Use the service connection name you have in Azure DevOps
+    
 
   # Step 2: Install any necessary dependencies for HTML linting (optional)
   - task: NodeTool@0
