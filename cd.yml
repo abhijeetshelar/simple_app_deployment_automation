@@ -4,7 +4,27 @@ trigger:
       - main
 
 pool:
- name: 'Linux'
+  name: 'Linux'
 
 variables:
-  
+  TF_VAR_client_id: $(azCli.client_id)
+  TF_VAR_client_secret: $(azCli.client_secret)
+  TF_VAR_sub_id: $(azCli.subscription_id)
+  TF_VAR_tenant_id: $(azCli.tenant_id)
+
+steps:
+  - task: UseAzureCLI@2
+    inputs:
+      azureSubscription: 'YourServiceConnectionName'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        # Navigate to the Terraform directory
+        cd terraform 
+
+        # Initialize Terraform
+        terraform init
+
+        # Run Terraform plan and output to a file
+        terraform plan -out=tfplan
+    displayName: 'Run Terraform Plan'
