@@ -24,7 +24,7 @@ steps:
       inlineScript: |
         if [[ "$(INFRA_CREATED)" != "true" ]]; then
           echo "Running Terraform as infrastructure is not created yet..."
-          cd terraform
+          cd terrafom
           terraform plan -out=tfplan
           terraform apply tfplan
         else
