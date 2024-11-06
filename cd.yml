@@ -1,19 +1,24 @@
 trigger:
-  branches:
-    include:
-      - main
+  - none
 
 pool:
-  name: 'Linux'
+  name: 'Linux'  # Adjust as needed
 
 variables:
   TF_VAR_client_id: $(azCli.client_id)
   TF_VAR_client_secret: $(azCli.client_secret)
-  TF_VAR_sub_id: $(azCli.subscription_id)
+  TF_VAR_subscription_id: $(azCli.subscription_id)
   TF_VAR_tenant_id: $(azCli.tenant_id)
 
 steps:
- - script: 
-      az login --service-principal -u $(TF_VAR_client_id) -p $(TF_VAR_client_secret) --tenant $(TF_VAR_tenant_id)
-      az account set --subscription $(TF_VAR_sub_id)
-   displayName: 'Authenticate with Azure CLI'
+  # AzureCLI task with service connection
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'azurerm'  # Replace with your service connection name
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        echo "Setting up Azure subscription context..."
+        az account set --subscription $(TF_VAR_subscription_id)
+        # Any additional commands go here, such as Terraform actions or resource management
+    displayName: 'Azure CLI Task - Authenticate and Set Subscription'
