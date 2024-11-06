@@ -29,6 +29,7 @@ steps:
     displayName: 'Azure CLI Task - Authenticate and Set Subscription'
 
   - script: |
+      ls -l
       cd terraform
       terraform init
     displayName: 'Terraform Init'
