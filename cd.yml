@@ -1,0 +1,10 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+ name: 'Linux'
+
+variables:
+  
