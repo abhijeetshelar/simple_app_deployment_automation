@@ -35,6 +35,7 @@ steps:
     displayName: 'Terraform Init'
   
   - script: |
-     ls -l
-     terrafrom plan
+     cd terrafom
+     terraform plan
     displayName: 'terrafrom plan'
+
