@@ -30,6 +30,6 @@ steps:
 
   - script: |
       ls -l
-      cd terraform
+      cd terrafom
       terraform init
     displayName: 'Terraform Init'
