@@ -1,0 +1,61 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main  # Trigger pipeline on push to the main branch
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # Name of the HTML linter to be used (optional but recommended)
+  HTML_LINTER: 'htmlhint'
+  TERRAFORM_VALIDATION: 'true'    # Set to 'true' to validate Terraform code
+
+steps:
+  # Step 1: Checkout code using the GitHub service connection
+  - checkout: self
+    persistCredentials: true
+    displayName: 'Checkout code from GitHub'
+    inputs:
+      fetchDepth: 1  # Only fetch the latest commit to reduce build time
+      repository: yourusername/yourrepo  # Replace with your GitHub repository path
+      serviceConnection: github  # Use the service connection name you have in Azure DevOps
+
+  # Step 2: Install any necessary dependencies for HTML linting (optional)
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+  - script: |
+      npm install -g $(HTML_LINTER)
+    displayName: 'Install HTML linter'
+
+  # Step 3: Run HTML linter on the static HTML files (optional)
+  - script: |
+      $(HTML_LINTER) '**/*.html'
+    displayName: 'Lint HTML files'
+
+  # Step 4: Install Terraform
+  - task: TerraformInstaller@0
+    inputs:
+      terraformVersion: 'latest'
+
+  # Step 5: Initialize Terraform in the terraform folder
+  - script: |
+      cd terraform
+      terraform init
+    displayName: 'Initialize Terraform'
+
+  # Step 6: Validate Terraform configuration
+  - script: |
+      cd terraform
+      terraform validate
+    displayName: 'Validate Terraform configuration'
+
+  # Step 7: Check for Terraform formatting
+  - script: |
+      cd terraform
+      terraform fmt -check
+    displayName: 'Check Terraform formatting'
+
+  # Optional: Additional steps like uploading artifacts can be added if necessary.
