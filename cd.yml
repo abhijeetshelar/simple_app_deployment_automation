@@ -22,15 +22,16 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        echo "Setting up Azure subscription context..."
-        echo "Client ID: $TF_VAR_client_id"
-        echo "Tenant ID: $TF_VAR_tenant_id"
-        echo "Subscription ID: $TF_VAR_sub_id" 
-        
-        az account set --subscription $TF_VAR_sub_id
-        echo "Subscription set successfully."
-
-    displayName: 'Azure CLI Task - Authenticate and Set Subscription'
+        if [[ "$(INFRA_CREATED)" != "true" ]]; then
+          echo "Running Terraform as infrastructure is not created yet..."
+          cd terraform
+          terraform plan -out=tfplan
+          terraform apply tfplan
+        else
+          echo "Infrastructure already created, skipping Terraform..."
+        fi
+    displayName: 'Run Terraform Plan and Apply'
+    condition: and(succeeded(), eq(variables['INFRA_CREATED'], 'false'))
 
   - script: |
       ls -l
