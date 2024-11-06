@@ -7,7 +7,7 @@ pool:
 variables:
   TF_VAR_client_id: $(azCli.client_id)
   TF_VAR_client_secret: $(azCli.client_secret)
-  TF_VAR_subscription_id: $(azCli.subscription_id)
+  TF_VAR_sub_id: $(azCli.subscription_id)
   TF_VAR_tenant_id: $(azCli.tenant_id)
 
 steps:
@@ -19,6 +19,6 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         echo "Setting up Azure subscription context..."
-        az account set --subscription $(TF_VAR_subscription_id)
+        az account set --subscription $(TF_VAR_sub_id)
         # Any additional commands go here, such as Terraform actions or resource management
     displayName: 'Azure CLI Task - Authenticate and Set Subscription'
